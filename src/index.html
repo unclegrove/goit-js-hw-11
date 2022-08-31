@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page title</title>
+    <title>What's up?</title>
     <!-- Styles -->
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
+    <div class="container">
+    
     <!-- Search From -->
-    <form class="search-form" id="search-form">
-      <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
-      <button type="submit">Search</button>
-    </form>
+  <form class="search search-form" id="search-form">
+    <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+    <button class="form-button" type="submit">Search</button>
+  </form>
 
     <!-- Gallery Container -->
     <div class="gallery">
@@ -21,6 +23,9 @@
 
     <!-- Load Button -->
     <button type="button" class="load-more">Load more</button>
+    </div>
+
+    <a class="up-button"></a>
 
     <!-- Scripts -->
     <script type="module" src="./index.js"></script>
