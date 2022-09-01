@@ -31,7 +31,19 @@ function onFormSubmit(e) {
           );
         } else {
           renderGallery(data.hits);
-          loadBtn.showBtn();
+
+          const limit = Math.ceil(data.totalHits / config.params.per_page);
+          console.log(config.params.page > limit);
+          if (config.params.page >= limit) {
+            loadBtn.hideBtn();
+            Notiflix.Notify.warning(
+              `We're sorry, but you've reached the end of search results.`
+            );
+          } else {
+            loadBtn.showBtn();
+          }
+
+          //loadBtn.showBtn();
           let lightboxGallery = new SimpleLightbox('.gallery a', {
             captions: true,
             captionsData: 'alt',
@@ -57,20 +69,23 @@ ref.loadBtn.addEventListener('click', onLoadBtnClick);
 function onLoadBtnClick(e) {
   config.params.page += 1;
 
-  getImages(srchQuery).then(({ data }) => {
-    renderGallery(data.hits);
-    let lightboxGallery = new SimpleLightbox('.gallery a', {
-      captions: true,
-      captionsData: 'alt',
-      captionsDelay: '250ms',
-    });
+  getImages(srchQuery)
+    .then(({ data }) => {
+      renderGallery(data.hits);
+      let lightboxGallery = new SimpleLightbox('.gallery a', {
+        captions: true,
+        captionsData: 'alt',
+        captionsDelay: '250ms',
+      });
 
-    const limit = Math.round(data.totalHits / config.params.per_page);
-    if (config.params.page > limit) {
-      loadBtn.hideBtn();
-      Notiflix.Notify.warning(
-        `We're sorry, but you've reached the end of search results.`
-      );
-    }
-  });
+      const limit = Math.ceil(data.totalHits / config.params.per_page);
+      console.log(config.params.page > limit);
+      if (config.params.page >= limit) {
+        loadBtn.hideBtn();
+        Notiflix.Notify.warning(
+          `We're sorry, but you've reached the end of search results.`
+        );
+      }
+    })
+    .catch(error => console.log(error));
 }
